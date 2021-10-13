@@ -42,6 +42,7 @@ namespace MathForGames
                 {
                     if (_actors[i].Position == _actors[j].Position && j != i)
                         _actors[i].OnCollision(_actors[j]);
+
                 }
             }
         }

@@ -6,8 +6,12 @@ namespace MathForGames
 {
     class Shop
     {
-        int _gold;
-        item[] _inventory;
+        private Player _player;
+        static int _gold;
+        static item[] _inventory;
+        
+        public static item[] _shopStock;
+        
 
         public Shop()
         {
@@ -22,7 +26,7 @@ namespace MathForGames
             _inventory = items;
         }
 
-        public bool Sell(Player player, int Stock, int playerInventory)
+        public static bool Sell(Player player, int Stock, int playerInventory)
         {
             item ItemBuy = _inventory[Stock];
 
@@ -33,5 +37,7 @@ namespace MathForGames
             }
             return false;
         }
+
+        
     }
 }

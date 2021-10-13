@@ -45,7 +45,7 @@ namespace MathForGames
 
         public virtual void OnCollision(Actor actor)
         {
-            Engine.CloseApplication();
+            Engine.ShoppingMenu();
         }
 
         public virtual void Start()

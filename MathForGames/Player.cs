@@ -9,11 +9,12 @@ namespace MathForGames
     {
         private float _speed;
         private Vector2 _velocity;
-        int _gold;
-        item[] _inventory;
+        static int _gold;
+        static item[] _inventory;
 
-        public int Gold()
+        public static int Gold()
         {
+            _gold = 5000;
             return _gold;
         }
 
@@ -46,10 +47,11 @@ namespace MathForGames
             set { _velocity = value; }
         }
 
-        public Player(char icon, float x, float y, float speed, string name = "Default", ConsoleColor color = ConsoleColor.White) 
+        public Player(char icon, float x, float y, float speed, string name = "Default", ConsoleColor color = ConsoleColor.White, int gold = 4000) 
             : base(icon, x, y, name, color)
         {
             _speed = speed;
+            _gold = gold;
         }
 
         public override void Update()
@@ -81,7 +83,8 @@ namespace MathForGames
 
         public virtual void OnCollision(Actor actor)
         {
-            Engine.CloseApplication();
+            Engine.ShoppingMenu();
         }
+
     }
 }

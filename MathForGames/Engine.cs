@@ -19,10 +19,10 @@ namespace MathForGames
         private static int _currentSceneIndex;
         private static Icon[,] _buffer;
         int playerIndex = -1;
-        private Player _player;
+        private static Player _player;
         private Shop _shop;
         private int _currentScene;
-        private item[] _shopStock;
+        public static item[] _shopStock;
 
         private item _blueBerry;
         private item _animeFigure;
@@ -55,9 +55,9 @@ namespace MathForGames
         private void Start()
         {
             Scene scene = new Scene();
-            Actor actor = new Actor('$', new MathLibrary.Vector2 { x = 0, y = 0 },  "Actor1", ConsoleColor.Yellow);
-            Actor actor2 = new Actor('&', new MathLibrary.Vector2 { x = 10, y = 10 }, "Actor2", ConsoleColor.Green);
-            Player player = new Player('@', 5, 5, 1, "Player", ConsoleColor.Red);
+            Actor actor = new Actor('$', new MathLibrary.Vector2 { x = 0, y = 0 },  "Shop", ConsoleColor.Green);
+            Actor actor2 = new Actor('W', new MathLibrary.Vector2 { x = 10, y = 10 }, "Actor2", ConsoleColor.Blue);
+            Player player = new Player('@', 5, 5, 1, "Player", ConsoleColor.Yellow, 5000);
 
             scene.AddActor(actor);
             scene.AddActor(actor2);
@@ -68,7 +68,11 @@ namespace MathForGames
             _scenes[_currentSceneIndex].Start();
 
             Console.CursorVisible = false;
+
+            _shopStock = new item[] { _blueBerry, _animeFigure, _panacea };
+            _shop = new Shop(_shopStock);
         }
+
 
         /// <summary>
         /// Called everytime the game loops
@@ -111,6 +115,7 @@ namespace MathForGames
                 //skip a line once at the end of a row
                 Console.WriteLine();
             }
+            
         }
         /// <summary>
         /// Called when the application exits
@@ -183,6 +188,85 @@ namespace MathForGames
         public static void CloseApplication()
         {
             _shouldApplicationClose = true;
+        }
+
+        public static void PrintInventory(item[] inventory)
+        {
+            for (int i = 0; i < inventory.Length; i++)
+            {
+                Console.WriteLine((i + 1) + ". " + inventory[i].name + "$" + inventory[i].cost);
+            }
+        }
+
+        public static void ShoppingMenu()
+        {
+            Console.WriteLine("Welcome! Please select an item.");
+            //Shows the player the amount of money they have left
+            Console.WriteLine("\nYou have: $" + Player.Gold());
+            //shows the player what the shop has
+            PrintInventory(_shopStock);
+            char input = Console.ReadKey().KeyChar;
+            int itemIndex = -1;
+            switch (input)
+            {
+                //each case is an item to buy
+                case '1':
+                    {
+                        itemIndex = 0;
+                        break;
+                    }
+                case '2':
+                    {
+                        itemIndex = 1;
+                        break;
+                    }
+                case '3':
+                    {
+                        itemIndex = 2;
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("Invalid Input");
+                        Console.ReadKey(true);
+                        Console.Clear();
+                        return;
+                    }
+            }
+
+            if (Player.Gold() < _shopStock[itemIndex].cost)
+            {
+                Console.WriteLine("You cant afford this.");
+                return;
+            }
+
+            //allows the player to place the item they want in the slot of their choice
+            Console.WriteLine("Choose a slot to replace.");
+            //shows the player inventory 
+            PrintInventory(_player.GetInventory());
+            input = Console.ReadKey().KeyChar;
+
+            int playerIndex = -1;
+            //each case is a slot the player can put an item into
+            switch (input)
+            {
+                case '1':
+                    {
+                        playerIndex = 0;
+                        break;
+                    }
+                case '2':
+                    {
+                        playerIndex = 1;
+                        break;
+                    }
+                case '3':
+                    {
+                        playerIndex = 2;
+                        break;
+                    }
+            }
+            Shop.Sell(_player, itemIndex, playerIndex);
         }
     }
 }
