@@ -18,15 +18,14 @@ namespace MathForGames
         private Scene[] _scenes = new Scene[0];
         private static int _currentSceneIndex;
         private static Icon[,] _buffer;
-        int playerIndex = -1;
+        public int  playerIndex = -1;
         private static Player _player;
-        private Shop _shop;
-        private int _currentScene;
+        private static Shop _shop;
         public static item[] _shopStock;
 
-        private item _blueBerry;
-        private item _animeFigure;
-        private item _panacea;
+        private static item _blueBerry;
+        private static item _animeFigure;
+        private static item _panacea;
 
         /// <summary>
         /// Called to bein the application.
@@ -55,12 +54,12 @@ namespace MathForGames
         private void Start()
         {
             Scene scene = new Scene();
-            Actor actor = new Actor('$', new MathLibrary.Vector2 { x = 0, y = 0 },  "Shop", ConsoleColor.Green);
-            Actor actor2 = new Actor('W', new MathLibrary.Vector2 { x = 10, y = 10 }, "Actor2", ConsoleColor.Blue);
+            Actor actor = new Actor('$', new MathLibrary.Vector2 { x = 4, y = 4 },  "Shop", ConsoleColor.Green);
+            
             Player player = new Player('@', 5, 5, 1, "Player", ConsoleColor.Yellow, 5000);
 
             scene.AddActor(actor);
-            scene.AddActor(actor2);
+            
             scene.AddActor(player);
 
             _currentSceneIndex = AddScene(scene);
@@ -69,8 +68,9 @@ namespace MathForGames
 
             Console.CursorVisible = false;
 
-            _shopStock = new item[] { _blueBerry, _animeFigure, _panacea };
-            _shop = new Shop(_shopStock);
+            
+
+            
         }
 
 
@@ -200,6 +200,22 @@ namespace MathForGames
 
         public static void ShoppingMenu()
         {
+            _shopStock = new item[] { _blueBerry, _animeFigure, _panacea };
+            _shop = new Shop(_shopStock);
+
+            //make the Blue Berry
+            _blueBerry.name = "Blue Berry ";
+            _blueBerry.cost = 1000;
+            //Make the anime figure
+            _animeFigure.name = "An Anime Figure ";
+            _animeFigure.cost = 2000;
+            //make the literal panacea
+            _panacea.name = "The literal Panacea ";
+            _panacea.cost = 1;
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Clear();
+            Console.CursorVisible = true;
             Console.WriteLine("Welcome! Please select an item.");
             //Shows the player the amount of money they have left
             Console.WriteLine("\nYou have: $" + Player.Gold());

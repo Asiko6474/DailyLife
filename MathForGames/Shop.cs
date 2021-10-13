@@ -6,12 +6,9 @@ namespace MathForGames
 {
     class Shop
     {
-        private Player _player;
+        
         static int _gold;
         static item[] _inventory;
-        
-        public static item[] _shopStock;
-        
 
         public Shop()
         {

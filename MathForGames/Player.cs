@@ -10,7 +10,7 @@ namespace MathForGames
         private float _speed;
         private Vector2 _velocity;
         static int _gold;
-        static item[] _inventory;
+        public static item[] _inventory;
 
         public static int Gold()
         {
