@@ -27,7 +27,7 @@ namespace MathForGames
         {
             item ItemBuy = _inventory[Stock];
 
-            if (player.Buy(ItemBuy, playerInventory))
+            if (Player.Buy(ItemBuy, playerInventory))
             {
                 _gold += ItemBuy.cost;
                 return true;

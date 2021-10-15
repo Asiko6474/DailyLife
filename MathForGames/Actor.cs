@@ -8,7 +8,7 @@ namespace MathForGames
     struct Icon
     {
         public char Symbol;
-        public ConsoleColor color;
+        public ConsoleColor Color;
     }
 
     class Actor
@@ -27,6 +27,11 @@ namespace MathForGames
             get { return _started; }
         }
 
+        public Icon Icon
+        {
+            get { return _icon; }
+        }
+
         public Vector2 Position
         {
             get { return _position;  }
@@ -38,7 +43,7 @@ namespace MathForGames
 
         public Actor(char icon, Vector2 position, string name = "Arthurd", ConsoleColor color = ConsoleColor.White)
         {
-            _icon = new Icon { Symbol = icon, color = color };
+            _icon = new Icon { Symbol = icon, Color = color };
             _position = position;
             _name = name;
         }

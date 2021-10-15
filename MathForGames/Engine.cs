@@ -41,7 +41,7 @@ namespace MathForGames
                     Update();
                     Draw();
                     
-                    Thread.Sleep(150);
+                    
                 }
 
             // call end for the entire application.
@@ -53,13 +53,15 @@ namespace MathForGames
         /// </summary>
         private void Start()
         {
+            UI Gold = new UI(20, 3, "Money", ConsoleColor.Blue, 10, 10, "Money: " + Player.Gold());
+
             Scene scene = new Scene();
             Actor actor = new Actor('$', new MathLibrary.Vector2 { x = 4, y = 4 },  "Shop", ConsoleColor.Green);
             
             Player player = new Player('@', 5, 5, 1, "Player", ConsoleColor.Yellow, 5000);
 
             scene.AddActor(actor);
-            
+            scene.AddUIElements(Gold);
             scene.AddActor(player);
 
             _currentSceneIndex = AddScene(scene);
@@ -68,9 +70,6 @@ namespace MathForGames
 
             Console.CursorVisible = false;
 
-            
-
-            
         }
 
 
@@ -80,6 +79,7 @@ namespace MathForGames
         private void Update()
         {
             _scenes[_currentSceneIndex].Update();
+            _scenes[_currentSceneIndex].UpdateUI();
 
             while (Console.KeyAvailable)
                 Console.ReadKey(true);
@@ -98,6 +98,7 @@ namespace MathForGames
 
             //Adds all actor icons to buffer
             _scenes[_currentSceneIndex].Draw();
+            _scenes[_currentSceneIndex].DrawUI();
 
             //Iterate through buffer
             for (int y = 0; y < _buffer.GetLength(1); y++)
@@ -108,7 +109,7 @@ namespace MathForGames
                         _buffer[x, y].Symbol = ' ';
 
                     //Set console text color to be the color of the item at buffer
-                    Console.ForegroundColor = _buffer[x, y].color;
+                    Console.ForegroundColor = _buffer[x, y].Color;
                     //print the symbol of the item in the buffer
                     Console.Write(_buffer[x, y].Symbol);
                 }
@@ -221,7 +222,7 @@ namespace MathForGames
             Console.WriteLine("\nYou have: $" + Player.Gold());
             //shows the player what the shop has
             PrintInventory(_shopStock);
-            char input = Console.ReadKey().KeyChar;
+            char input = Console.ReadKey(true).KeyChar;
             int itemIndex = -1;
             switch (input)
             {
@@ -241,6 +242,11 @@ namespace MathForGames
                         itemIndex = 2;
                         break;
                     }
+                case '4':
+                    {
+                        break;
+                    }
+
                 default:
                     {
                         Console.WriteLine("Invalid Input");
@@ -257,9 +263,9 @@ namespace MathForGames
             }
 
             //allows the player to place the item they want in the slot of their choice
-            Console.WriteLine("Choose a slot to replace.");
+            Console.WriteLine(" Choose a slot to replace.");
             //shows the player inventory 
-            PrintInventory(_player.GetInventory());
+            PrintInventory(Player.GetInventory());
             input = Console.ReadKey().KeyChar;
 
             int playerIndex = -1;

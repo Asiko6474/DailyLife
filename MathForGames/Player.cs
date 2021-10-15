@@ -18,7 +18,7 @@ namespace MathForGames
             return _gold;
         }
 
-        public bool Buy(item item, int playerInventory)
+        public static bool Buy(item item, int playerInventory)
         {
             if (_gold >= item.cost)
             {
@@ -30,7 +30,7 @@ namespace MathForGames
             }
             return false;
         }
-        public item[] GetInventory()
+        public static item[] GetInventory()
         {
             return _inventory;
         }
@@ -52,6 +52,7 @@ namespace MathForGames
         {
             _speed = speed;
             _gold = gold;
+            _inventory = new item[5];
         }
 
         public override void Update()
