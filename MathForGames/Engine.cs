@@ -53,12 +53,11 @@ namespace MathForGames
         /// </summary>
         private void Start()
         {
-            UI Gold = new UI(20, 3, "Money", ConsoleColor.Blue, 10, 10, "Money: " + Player.Gold());
-
             Scene scene = new Scene();
             Actor actor = new Actor('$', new MathLibrary.Vector2 { x = 4, y = 4 },  "Shop", ConsoleColor.Green);
             
             Player player = new Player('@', 5, 5, 1, "Player", ConsoleColor.Yellow, 5000);
+            UI Gold = new UI(0, 0, "Money", ConsoleColor.White, 10, 10, "Money: " + Player.Gold());
 
             scene.AddActor(actor);
             scene.AddUIElements(Gold);
